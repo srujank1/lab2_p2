@@ -3,10 +3,10 @@
 #include <time.h>
 #include "common.h"
 
+FILE *out;
 int main (int argc, const char *argv[])
 {
     FILE *source_file;
-    FILE *out_file;
     char source_name[MAX_FILE_NAME_LENGTH];
 
 	int line_number=0;	//total lines
@@ -16,6 +16,9 @@ int main (int argc, const char *argv[])
 
 	printf("Enter the source file name\n");
 	scanf("%s", &source_name);
+
+
+    out=fopen("OUTPUT.txt","w");
 
     if((source_file=fopen(source_name, "r"))==NULL){
         puts("source could not be opened");
@@ -27,9 +30,14 @@ int main (int argc, const char *argv[])
         }
     }
     fclose(source_file);
+    fclose(out);
 
 
     return 0;
+}
+
+void print_to_output(char output_line[]){
+    fprintf(out, output_line);
 }
 
 BOOLEAN get_source_line(FILE *src_file, char src_name[], char todays_date[])
@@ -40,9 +48,9 @@ BOOLEAN get_source_line(FILE *src_file, char src_name[], char todays_date[])
     line_number++;
 
     if(fgets(source_buffer, sizeof source_buffer, src_file)!=NULL){
-		/*  Missing Code Here */
-		print.print_line(source_buffer, todays_date[]);
-		//fputs(source_buffer, stdout);     //prints out the file to console
+		print_line(source_buffer, src_name, todays_date);
+		//fprintf(out, "%d:\t%s",line_number, source_buffer);
+		fputs(source_buffer, stdout);     //prints out the file to console
         return (TRUE);
     }
     else
