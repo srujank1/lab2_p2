@@ -4,7 +4,7 @@ static void print_page_header(char source_name[], char date[]);
 
 void print_line (char line[], char source_name_to_print[], char date_to_print[])
 {
-    
+    	FILE *out_file = fopen( source_name_to_print, 'w');
 	
 	char save_ch;
 	char *save_chp = NULL;
@@ -12,7 +12,7 @@ void print_line (char line[], char source_name_to_print[], char date_to_print[])
     
     	if (++line_count > MAX_LINES_PER_PAGE)
     		{
-        		print_page_header( source_name_to_print, date_to_print);
+        		print_page_header( out_file, date_to_print);
    		}
    	if (strlen(line) > MAX_PRINT_LINE_LENGTH) 
     		{
@@ -24,7 +24,7 @@ void print_line (char line[], char source_name_to_print[], char date_to_print[])
     		}
     	if (save_chp != NULL)
     		{
-        		fprintf(source_name_to_print, "%s\n", line);
+        		fprintf(out_file, "%s\n", line);
 			line = save_chp;
 			
     		}
@@ -32,7 +32,7 @@ void print_line (char line[], char source_name_to_print[], char date_to_print[])
     		
 	if (save_chp == NULL)
     		{
-			fprintf(source_name_to_print, "%s\n", line);
+			fprintf(out_file, "%s\n", line);
 				
     		}
 }
@@ -41,7 +41,7 @@ static void print_page_header(char source_name[], char date[])
     
 	static int page_number = 0;
    	line_count = 0;
-	fprintf(source_name, "%s\t%s\t%d\n", source_name, date, page_number); 	
+	fprintf(out_file, "%s\t%d", date, page_number); 	
 	page_number++; 
 	    
 }
