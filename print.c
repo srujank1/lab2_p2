@@ -10,7 +10,7 @@ char save_ch;
 char *save_chp = NULL;
 
 if (line_count > MAX_LINES_PER_PAGE-1 || line_count==0){
-    print_page_header( source_name_to_print, date_to_print);
+    print_page_header( source_name_to_print, date_to_print); // calls page_header
 }
 
 if (strlen(line) > MAX_PRINT_LINE_LENGTH){
@@ -18,13 +18,13 @@ if (strlen(line) > MAX_PRINT_LINE_LENGTH){
     line[MAX_PRINT_LINE_LENGTH] = '\0';
 }
 
-if(save_chp != NULL){
-    print_to_output(line, line_count);
+if(save_chp != NULL) {
+    print_to_output(line, line_count);//calls prints output
     line = save_chp;
 }
 
-if (save_chp == NULL){
-    print_to_output(line, line_count);
+if (save_chp == NULL) {
+    print_to_output(line, line_count);//calls prints output
 }
 line_count++;
 }
@@ -33,8 +33,8 @@ static void print_page_header(char source_name[], char date[])// Used to print h
 {
 
 
-line_count=1;
-print_to_header( date, page_number, source_name);
+line_count=1; // sets line to line_count to 1
+print_to_header( date, page_number, source_name);// calls prints header
 page_number++;
 
 }
